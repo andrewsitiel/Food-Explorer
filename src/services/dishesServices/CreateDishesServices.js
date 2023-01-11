@@ -7,6 +7,11 @@ class CreateDishesServices{
     const allDishes = await this.repository.index();
     return allDishes
   }
+
+  async create(newDish) {
+    await this.repository.insert(newDish);
+    return
+  }
 }
 
 module.exports = CreateDishesServices;
