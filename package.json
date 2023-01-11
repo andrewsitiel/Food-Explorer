@@ -5,7 +5,8 @@
   "main": "./src/server.js",
   "scripts": {
     "dev" : "nodemon ./src/server.js",
-    "migrates": "npx knex --knexfile=./src/database/knex/knexfile.js migrate:latest"
+    "migrate:latest": "npx knex --knexfile ./src/database/knex/knexfile.js migrate:latest",
+    "migrate:rollback": "npx knex --knexfile ./src/database/knex/knexfile.js migrate:rollback"
   },
   "keywords": [
     "node",

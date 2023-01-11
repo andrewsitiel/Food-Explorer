@@ -3,7 +3,7 @@ const router = Router();
 
 const userRoutes = require("./users.routes");
 const accessRoute = require("./access.route");
-const dishesRoutes = require(".dishes.routes");
+const dishesRoutes = require("./dishes.routes");
 
 router.use("/users", userRoutes);
 router.use("/access", accessRoute);

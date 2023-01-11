@@ -1,4 +1,3 @@
-
 exports.up = knex => knex.schema.createTable("orders", table => {
   table.increments("id").notNullable();
   table.text("status");
