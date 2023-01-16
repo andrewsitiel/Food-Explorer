@@ -3,8 +3,9 @@ const DishesController = require("../controllers/dishesController");
 
 const router = Router();
 const controller = new DishesController();
+const ensureAuthenticated = require("../middlewares/ensureAuthenticated");
 
-router.get("/", controller.index);
-router.post("/", controller.create);
+router.get("/", ensureAuthenticated, controller.index);
+router.post("/", ensureAuthenticated, controller.create);
 
 module.exports = router;

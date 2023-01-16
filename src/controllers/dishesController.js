@@ -1,12 +1,12 @@
-const CreateIngredientsServices = require("../services/ingredientsServices/CreateIngredientsServices");
-const CreateDishesServices = require("../services/dishesServices/CreateDishesServices");
+const CreateIngredientServices = require("../services/ingredientServices/CreateIngredientServices");
+const CreateDishServices = require("../services/dishServices/CreateDishServices");
 const DishesRepository = require("../repositories/DishesRepository");
 const IngredientsRepository = require("../repositories/IngredientsRepository");
 
 const dishesRepository = new DishesRepository();
-const dishesServices = new CreateDishesServices(dishesRepository);
+const dishesServices = new CreateDishServices(dishesRepository);
 const ingredientsRepository = new IngredientsRepository();
-const ingredientsServices = new CreateIngredientsServices(ingredientsRepository);
+const ingredientsServices = new CreateIngredientServices(ingredientsRepository);
 
 class DishesController {
 
