@@ -1,5 +1,5 @@
 exports.up = knex => knex.schema.createTable("orders", table => {
-  table.increments("id").notNullable();
+  table.text("id").primary();
   table.text("status");
   table.text("description");
   table.timestamp("created_at").default(knex.fn.now());
