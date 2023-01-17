@@ -11,31 +11,19 @@ const ingredientsServices = new CreateIngredientServices(ingredientsRepository);
 class DishesController {
 
   async index(request, response) {
-
-    try {
-
       const allIngredients = await ingredientsServices.index();
       const allDishes = await dishesServices.index(allIngredients);
       
       return response.status(200).json({allDishes});
-    } catch(err){
-      console.log(err)
-    }
-
   }
 
   async create(request, response) {
     const { name, description, category, price, ingredients } = request.body;
 
-   try {
-
      const dishID = await dishesServices.create({name, description, category, price});
      await ingredientsServices.create(ingredients, dishID);
      
      return response.status(201).json("Prato criado com sucesso")
-    } catch (err) {
-      console.log(err)
-    }
   }
 }
 

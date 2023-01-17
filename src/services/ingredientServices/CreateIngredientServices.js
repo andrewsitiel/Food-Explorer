@@ -8,15 +8,9 @@ class CreateIngredientServices {
   }
 
   async create(newIngredients, DishID) {
-    const allIngredients = await this.repository.select();
-
     newIngredients = newIngredients.map(newIngredient => newIngredient.toUpperCase())
 
-    const filteredIngredients = newIngredients
-    .map(ingredient => ( {name: ingredient} ))
-    .filter(newIngredient => (
-      !allIngredients.find( ingredient => ingredient.name === newIngredient.name ))
-    )
+    const filteredIngredients = await this.#utils.filterIngredients(newIngredients);
 
     if(filteredIngredients.length > 0){
       await this.repository.insert(filteredIngredients);
@@ -27,6 +21,22 @@ class CreateIngredientServices {
 
     await this.repository.insertIDs(stringIngredientsIDs, DishID);
   }
+
+  #utils = {
+    filterIngredients: async (newIngredients) => {
+      const allIngredients = await this.repository.select();
+
+      const filteredIngredients = newIngredients
+      .map(ingredient => ( {name: ingredient} ))
+      .filter(newIngredient => (
+            !allIngredients.find( ingredient => ingredient.name === newIngredient.name )
+          )
+        )
+
+      return filteredIngredients
+    }
+  };
+
 }
 
 module.exports = CreateIngredientServices;

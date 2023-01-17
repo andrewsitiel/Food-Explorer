@@ -31,6 +31,8 @@ class CreateDishServices{
   }
 
   async create(newDish) {
+    newDish.name = newDish.name.toUpperCase();
+    
     return await this.repository.insert(newDish);
   }
 }
