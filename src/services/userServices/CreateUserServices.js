@@ -10,6 +10,15 @@ class CreateUserServices {
     this.repository = repository;
   }
 
+  async index(user_id) {
+    const user = await this.#utils.getUser(user_id);
+    const favoritesIDs = user.favorites_dishes_id.split(",");
+
+    const favoritesDishes = await this.#utils.getDishesById(favoritesIDs)
+
+    return favoritesDishes
+  }
+
   async create ({name, email, password}) {
     const checkEmailExists = await this.repository.findByEmail(email);
     
@@ -46,6 +55,47 @@ class CreateUserServices {
 
     return {user, token}
   }
+
+  async update(favorites, user_id) {
+    
+    const dishesIDs = await this.#utils.getDishesByName(favorites)
+
+    await this.repository.update(dishesIDs, user_id);
+
+    return 
+  }
+
+  #utils = {
+    getDishesByName: async (favorites) => {
+      const allDishes= await this.repository.indexDishes();
+
+      const dishesIDs = allDishes
+      .filter(dish => (
+          favorites.find( favorite => dish.name === favorite)
+        )
+      )
+      .map(dish => dish.id)
+
+      return dishesIDs.toString()
+    },
+
+    getDishesById: async (favorites) => {
+      const allDishes= await this.repository.indexDishes();
+
+      const favoriteDishes = allDishes
+      .filter(dish => (
+          favorites.find( favoriteId => dish.id == favoriteId)
+        )
+      )
+
+      return favoriteDishes
+    },
+
+    getUser: async (user_id) => {
+      return await this.repository.select(user_id);
+    }
+
+  };
 }
 
 module.exports = CreateUserServices;
