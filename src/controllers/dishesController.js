@@ -14,14 +14,15 @@ class DishesController {
       const allIngredients = await ingredientsServices.index();
       const allDishes = await dishesServices.index(allIngredients);
       
-      return response.status(200).json({allDishes});
+      return response.status(200).json(allDishes);
   }
 
   async create(request, response) {
     const { name, description, category, price, ingredients } = request.body;
+    const imageFileName = request.file.filename;
 
-     const dishID = await dishesServices.create({name, description, category, price});
-     await ingredientsServices.create(ingredients, dishID);
+    const dishID = await dishesServices.create({name, description, category, price, image: imageFileName});
+    await ingredientsServices.create(ingredients, dishID);
      
      return response.status(201).json("Prato criado com sucesso")
   }
