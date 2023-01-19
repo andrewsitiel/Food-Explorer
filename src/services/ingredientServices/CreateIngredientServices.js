@@ -8,6 +8,11 @@ class CreateIngredientServices {
   }
 
   async create(newIngredients, DishID) {
+
+    if(!newIngredients) {
+      throw new AppError("Necessário informar os ingredientes")
+    }
+
     newIngredients = newIngredients.toUpperCase().trim().split(",");
     console.log(newIngredients)
     const filteredIngredients = await this.#utils.filterIngredients(newIngredients);

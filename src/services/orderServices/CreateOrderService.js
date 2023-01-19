@@ -1,3 +1,4 @@
+const AppError = require("../../utils/AppError");
 
 class CreateOrderServices{
   
@@ -6,6 +7,11 @@ class CreateOrderServices{
   }
 
   async create(user_id, description) {
+
+    if(!description) {
+      throw new AppError("Necessário informar a descrição do pedido")
+    }
+ 
     const newOrder = {
       id: this.#utils.generateUniqueIdentifier(),
       user_id: Number(user_id),

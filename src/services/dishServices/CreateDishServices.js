@@ -20,7 +20,7 @@ class CreateDishServices{
       throw new AppError("Por favor, insira uma imagem para o prato.")
     }
 
-    const diskStorage= new DiskStorage();
+    const diskStorage = new DiskStorage();
     
     await diskStorage.saveFile(newDish.image);
     return await this.repository.insert(newDish);
