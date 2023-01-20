@@ -24,6 +24,11 @@ class CreateOrderServices{
     return newOrder;
   }
 
+  async update(status, order_id) {
+    await this.repository.update(order_id, status);
+    return
+  }
+
   #utils = {
     generateUniqueIdentifier: () => {
       return (Date.now() * (Math.random() * 10))

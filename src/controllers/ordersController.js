@@ -13,6 +13,14 @@ class OrdersController {
       
     return response.status(201).json(newOrder)
   }
+
+  async create(request, response) {
+    const { order_id, status } = request.body;
+    
+    await orderServices.update(order_id, status);
+
+    return response.status(200).json({})
+  }
 }
 
 module.exports = OrdersController;
