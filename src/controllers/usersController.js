@@ -18,9 +18,9 @@ class UserController {
     const { name, email, password } = request.body;
 
     
-    await userServices.create({name, email, password});
+    const message = await userServices.create({name, email, password});
     
-    return response.status(201).json({});
+    return response.status(201).json({ message });
   }
 
   async update(request, response) {
