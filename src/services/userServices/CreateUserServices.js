@@ -35,7 +35,7 @@ class CreateUserServices {
 
     await this.repository.insert({ name, email, hashedPassword });
 
-    return
+    return "Usuário criado com sucesso!"
   }
 
   async access ({ email, password }) {
