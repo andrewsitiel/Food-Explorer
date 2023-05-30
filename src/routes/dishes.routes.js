@@ -10,6 +10,7 @@ const upload = multer(uploadConfig.MULTER);
 
 
 router.get("/", ensureAuthenticated, controller.index);
+router.get("/:id", ensureAuthenticated, controller.show);
 router.post("/", ensureAuthenticated, upload.single("image"), controller.create);
 
 module.exports = router;

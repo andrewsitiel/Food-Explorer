@@ -5,12 +5,20 @@ class CreateDishServices{
   constructor(repository){
     this.repository = repository;
   }
-  
+
   async index(allIngredients) {
+    const allDishes = await this.repository.select();
     
-    const allDishesWithIngredients = this.#utils.getAllDishesWithIngredients(allIngredients);
+    const allDishesWithIngredients = this.#utils.getAllDishesWithIngredients(allDishes, allIngredients);
 
     return allDishesWithIngredients
+  }
+
+  async show(id, allIngredients) {
+    const dish = await this.repository.show(id);
+    const dishWithIngredients = this.#utils.getDishWithIngredients(dish, allIngredients);
+
+    return dishWithIngredients;
   }
 
   async create(newDish) {
@@ -27,8 +35,7 @@ class CreateDishServices{
   }
 
   #utils = {
-    getAllDishesWithIngredients: async (allIngredients) => {
-      const allDishes = await this.repository.select();
+    getAllDishesWithIngredients: async (allDishes, allIngredients) => {
 
       const allDishesWithIngredients = allDishes.map(dish => {
         const dishIngredientsIDs = dish.ingredients_id.split(",");
@@ -40,6 +47,7 @@ class CreateDishServices{
         const dishIngredientsNames = dishIngredients.map(ingredient => ingredient.name);
   
         return {
+          id: dish.id,
           name: dish.name,
           description: dish.description,
           category: dish.category,
@@ -50,7 +58,21 @@ class CreateDishServices{
       });
 
       return allDishesWithIngredients
-    }
+    },
+    getDishWithIngredients: async (dish, allIngredients) => {
+      const dishIngredientsIDs = dish.ingredients_id.split(",");
+      
+      const dishIngredients = allIngredients.filter(ingredient => (
+        dishIngredientsIDs.find(id => id == ingredient.id)
+      ));
+
+      const {ingredients_id, ...restOfDishProperties} = dish; 
+
+      return {
+        ...restOfDishProperties,
+        ingredients: dishIngredients
+      } 
+    }   
   }
 }
 

@@ -14,7 +14,7 @@ class CreateIngredientServices {
     }
 
     newIngredients = newIngredients.toUpperCase().trim().split(",");
-    console.log(newIngredients)
+    
     const filteredIngredients = await this.#utils.filterIngredients(newIngredients);
 
     if(filteredIngredients.length > 0){

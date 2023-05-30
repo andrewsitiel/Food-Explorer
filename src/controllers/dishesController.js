@@ -17,6 +17,16 @@ class DishesController {
       return response.status(200).json(allDishes);
   }
 
+  async show(request, response) {
+    const { id } = request.params;
+
+    const allIngredients = await ingredientsServices.index();
+
+    const dish = await dishesServices.show(id, allIngredients);
+
+    return response.status(200).json({dish})
+  }
+
   async create(request, response) {
     const { name, description, category, price, ingredients } = request.body;
     const imageFileName = request.file.filename;
