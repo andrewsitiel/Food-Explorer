@@ -27,9 +27,9 @@ class UserController {
     const { favorites } = request.body;
     const user_id = request.user.id;
 
-      await userServices.update(favorites, user_id);
+    await userServices.update(favorites, user_id);
       
-      return response.status(201).json({})       
+    return response.status(201).json({})       
   }
 }
 

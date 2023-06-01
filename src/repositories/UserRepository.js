@@ -15,8 +15,8 @@ class UserRepository {
     return await knex("users").where({email}).first();
   }
 
-  async update(dishesIDs, user_id) {
-    await knex("users").update("favorites_dishes_id", dishesIDs).where({id: user_id})
+  async update(favorites, user_id) {
+    await knex("users").update("favorites_dishes_id", favorites).where({id: user_id})
     return
   }
 

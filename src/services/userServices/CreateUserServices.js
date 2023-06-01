@@ -62,28 +62,26 @@ class CreateUserServices {
   }
 
   async update(favorites, user_id) {
-    
-    const dishesIDs = await this.#utils.getDishesByName(favorites)
+    const {favorites_dishes_id} = await this.repository.select(user_id)
 
-    await this.repository.update(dishesIDs, user_id);
+    if(favorites_dishes_id){
+      const dishesIDs = favorites_dishes_id.split(",").map(id => parseInt(id));
+
+      const filteredFavorites= favorites.filter(fav_id => !dishesIDs.includes(fav_id))
+
+      const newFavorites = dishesIDs.concat(filteredFavorites).toString();
+      
+      await this.repository.update(newFavorites, user_id);
+
+      return
+    }
+
+    await this.repository.update(favorites, user_id);
 
     return 
   }
 
   #utils = {
-    getDishesByName: async (favorites) => {
-      const allDishes= await this.repository.indexDishes();
-
-      const dishesIDs = allDishes
-      .filter(dish => (
-          favorites.find( favorite => dish.name === favorite)
-        )
-      )
-      .map(dish => dish.id)
-
-      return dishesIDs.toString()
-    },
-
     getDishesById: async (favorites) => {
       const allDishes= await this.repository.indexDishes();
 
