@@ -11,15 +11,15 @@ class UserController {
 
     const userFavorites = await userServices.index(user_id);
 
-    return response.status(200).json({userFavorites})
+    return response.status(200).json({ userFavorites })
   }
-  
-  async create (request, response) {
+
+  async create(request, response) {
     const { name, email, password } = request.body;
 
-    
-    const message = await userServices.create({name, email, password});
-    
+
+    const message = await userServices.create({ name, email, password });
+
     return response.status(201).json({ message });
   }
 
@@ -28,8 +28,8 @@ class UserController {
     const user_id = request.user.id;
 
     await userServices.update(favorites, user_id);
-      
-    return response.status(201).json({})       
+
+    return response.status(201).json({})
   }
 }
 

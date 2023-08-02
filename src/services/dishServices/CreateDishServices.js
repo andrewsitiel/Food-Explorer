@@ -1,14 +1,13 @@
 const AppError = require("../../utils/AppError");
 const DiskStorage = require("../../providers/DiskStorage")
 
-class CreateDishServices{
-  constructor(repository){
+class CreateDishServices {
+  constructor(repository) {
     this.repository = repository;
   }
 
   async index(allIngredients) {
     const allDishes = await this.repository.select();
-    
     const allDishesWithIngredients = this.#utils.getAllDishesWithIngredients(allDishes, allIngredients);
 
     return allDishesWithIngredients
@@ -21,31 +20,30 @@ class CreateDishServices{
     return dishWithIngredients;
   }
 
-  async create(newDish) {
-    newDish.name = newDish.name.toUpperCase();
+  async create({ name, description, category, price, image }) {
 
-    if(!newDish.image) {
+    if (!image) {
       throw new AppError("Por favor, insira uma imagem para o prato.")
     }
 
     const diskStorage = new DiskStorage();
-    
-    await diskStorage.saveFile(newDish.image);
-    return await this.repository.insert(newDish);
+    await diskStorage.saveFile(image);
+
+    return await this.repository.insert({ name, description, category, price, image });
   }
 
   #utils = {
     getAllDishesWithIngredients: async (allDishes, allIngredients) => {
 
       const allDishesWithIngredients = allDishes.map(dish => {
+
         const dishIngredientsIDs = dish.ingredients_id.split(",");
-        
+
         const dishIngredients = allIngredients.filter(ingredient => (
           dishIngredientsIDs.find(id => id == ingredient.id)
         ));
-        
+
         const dishIngredientsNames = dishIngredients.map(ingredient => ingredient.name);
-  
         return {
           id: dish.id,
           name: dish.name,
@@ -61,18 +59,18 @@ class CreateDishServices{
     },
     getDishWithIngredients: async (dish, allIngredients) => {
       const dishIngredientsIDs = dish.ingredients_id.split(",");
-      
+
       const dishIngredients = allIngredients.filter(ingredient => (
         dishIngredientsIDs.find(id => id == ingredient.id)
       ));
 
-      const {ingredients_id, ...restOfDishProperties} = dish; 
+      const { ingredients_id, ...restOfDishProperties } = dish;
 
       return {
         ...restOfDishProperties,
         ingredients: dishIngredients
-      } 
-    }   
+      }
+    }
   }
 }
 
