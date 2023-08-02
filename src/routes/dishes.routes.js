@@ -1,5 +1,6 @@
 const ensureAuthenticated = require("../middlewares/ensureAuthenticated");
 const DishesController = require("../controllers/dishesController");
+const isAuthorized = require("../middlewares/isAuthorized");
 const uploadConfig = require("../config/upload");
 const { Router } = require("express");
 const multer = require("multer");
@@ -11,6 +12,6 @@ const upload = multer(uploadConfig.MULTER);
 
 router.get("/", ensureAuthenticated, controller.index);
 router.get("/:id", ensureAuthenticated, controller.show);
-router.post("/", ensureAuthenticated, upload.single("image"), controller.create);
+router.post("/", ensureAuthenticated, isAuthorized, upload.single("image"), controller.create);
 
 module.exports = router;
