@@ -10,13 +10,13 @@ class OrdersController {
     const user_id = request.user.id;
 
     const newOrder = await orderServices.create(user_id, description);
-      
+
     return response.status(201).json(newOrder)
   }
 
-  async create(request, response) {
+  async update(request, response) {
     const { order_id, status } = request.body;
-    
+
     await orderServices.update(order_id, status);
 
     return response.status(200).json({})
