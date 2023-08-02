@@ -1,23 +1,23 @@
 class CreateIngredientServices {
-  constructor(repository){
+  constructor(repository) {
     this.repository = repository;
   }
 
   async index() {
-    return await this.repository.select()
+    return await this.repository.select();
   }
 
   async create(newIngredients, DishID) {
 
-    if(!newIngredients) {
-      throw new AppError("Necessário informar os ingredientes")
+    if (!newIngredients) {
+      throw new AppError("Necessário informar os ingredientes");
     }
 
-    newIngredients = newIngredients.toUpperCase().trim().split(",");
-    
+    newIngredients = newIngredients.map(Ingredient => Ingredient.toUpperCase().trim());
+
     const filteredIngredients = await this.#utils.filterIngredients(newIngredients);
 
-    if(filteredIngredients.length > 0){
+    if (filteredIngredients.length > 0) {
       await this.repository.insert(filteredIngredients);
     }
 
@@ -32,10 +32,10 @@ class CreateIngredientServices {
       const allIngredients = await this.repository.select();
 
       const filteredIngredients = newIngredients
-      .map(ingredient => ( {name: ingredient} ))
-      .filter(newIngredient => (
-            !allIngredients.find( ingredient => ingredient.name === newIngredient.name )
-          )
+        .map(ingredient => ({ name: ingredient }))
+        .filter(newIngredient => (
+          !allIngredients.find(ingredient => ingredient.name === newIngredient.name)
+        )
         )
 
       return filteredIngredients
