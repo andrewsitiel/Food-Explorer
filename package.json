@@ -4,7 +4,8 @@
   "description": "",
   "main": "./src/server.js",
   "scripts": {
-    "dev" : "nodemon ./src/server.js",
+    "start": "pm2-runtime start ecosystem.config.js --env production",
+    "dev": "nodemon ./src/server.js",
     "migrate:latest": "npx knex --knexfile ./src/database/knex/knexfile.js migrate:latest",
     "migrate:rollback": "npx knex --knexfile ./src/database/knex/knexfile.js migrate:rollback"
   },

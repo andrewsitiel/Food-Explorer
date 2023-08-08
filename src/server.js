@@ -16,7 +16,7 @@ app.use(routes);
 app.use("/files", express.static(UPLOAD_FOLDER));
 
 app.use((error, request, response, next) => {
-  if(error instanceof AppError) {
+  if (error instanceof AppError) {
     return response.status(error.status).json({
       error: "error",
       message: error.message
@@ -29,5 +29,5 @@ app.use((error, request, response, next) => {
   })
 })
 
-const PORT = 3000;
-app.listen(PORT, () => {console.log(`App running on port ${PORT}`)});
+const PORT = process.env.PORT || 3300;
+app.listen(PORT, () => { console.log(`App running on port ${PORT}`) });
