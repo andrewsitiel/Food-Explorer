@@ -9,6 +9,5 @@ const orderRoutes = require("./orders.routes");
 router.use("/user", userRoutes);
 router.use("/access", accessRoute);
 router.use("/dishes", dishesRoutes);
-router.use("/orders", orderRoutes);
 
 module.exports = router;
