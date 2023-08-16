@@ -20,7 +20,8 @@ Back-End of a fictional restaurant called Food Explorer, who sells foods, drinks
 3. Install all dependencies (with ```npm install```).
 4. Run ```npm start``` in terminal for initialize the server on production environment, or ```npm run dev``` to development environment. (You can use the package manager as you like)
 <br>
-The standart port is 3300 but is changeable in server.js file.
+The standart port is 3300 but is changeable in server.js file. <br>
+Endpoint: https://food-explorer-back-lsv4.onrender.com
 
 ## Routes
 
