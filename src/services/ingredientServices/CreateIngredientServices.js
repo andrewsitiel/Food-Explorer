@@ -27,6 +27,27 @@ class CreateIngredientServices {
     await this.repository.insertIDs(stringIngredientsIDs, DishID);
   }
 
+  async delete(allDishes, id) {
+    const [deletableDish] = allDishes.filter(dish => dish.id == id);
+    const filteredDishes = allDishes.filter(dish => !(dish.id == id));
+
+    const deletableDishIngredients = deletableDish.ingredients_id.split(",");
+
+    const isAnUsedIngredient = deletableDishIngredients.filter(ingredient => (
+      filteredDishes.find(dish => dish.ingredients_id.split(",").includes(ingredient))
+    ))
+
+    if (isAnUsedIngredient.length > 0) {
+      const deletableIngredients = deletableDishIngredients.filter(ingredient_id => {
+        return !(isAnUsedIngredient.includes(ingredient_id))
+      })
+
+      return await this.repository.delete(deletableIngredients);
+    }
+
+    return await this.repository.delete(deletableDishIngredients);
+  }
+
   #utils = {
     filterIngredients: async (newIngredients) => {
       const allIngredients = await this.repository.select();
