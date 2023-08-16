@@ -13,5 +13,7 @@ const upload = multer(uploadConfig.MULTER);
 router.get("/", ensureAuthenticated, controller.index);
 router.get("/:id", ensureAuthenticated, controller.show);
 router.post("/", ensureAuthenticated, isAuthorized, upload.single("image"), controller.create);
+router.put("/", ensureAuthenticated, isAuthorized, upload.single("image"), controller.update);
+router.delete("/:id", ensureAuthenticated, isAuthorized, controller.delete);
 
 module.exports = router;
