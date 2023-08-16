@@ -13,6 +13,22 @@ class DishesRepository {
 
     return id
   }
+
+  async update({ id, name, description, category, price }) {
+    await knex("dishes").where({ id }).update({ name, description, category, price });
+
+    return
+  }
+
+  async patch({ id, filename: image }) {
+    await knex("dishes").where({ id }).update({ image })
+
+    return
+  }
+
+  async delete(id) {
+    await knex("dishes").where({ id }).delete();
+  }
 }
 
 module.exports = DishesRepository;
