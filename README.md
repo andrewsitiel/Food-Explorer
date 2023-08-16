@@ -39,7 +39,7 @@ The notes routes supports *get*, *post*, *put* and *delete* methods:
 - ```get("/")``` (index) - get all dishes on database.
 - ```get("/:id")``` (show) - get a specific dish. (Needs an id for identify the dish)
 - ```post("/")``` create a dish. (Needs administrator permission)
-- ```put("/")``` -update a dish. (Needs administrator permission and an id for identify the dish)
+- ```put("/")``` update a dish. (Needs administrator permission and an id for identify the dish)
 - ```delete("/:id")``` delete a dish. (Needs administrator permission and an id for identify the dish)
 
 ## Controllers, Services and Repositories
